@@ -1,0 +1,90 @@
+/// {Mixin} Filled circle
+///
+/// Sass mixin to create a filled circle and absolute position it if needed.
+/// 
+/// @author      William Teixeira Merussi
+/// @group       Tools / Mixins
+///
+/// @requires    {mixin} position [Position Mixin](https://gist.github.com/wmerussi/fa4679d3f65f3a9147ba95bc2d95d4b5) 
+///
+/// @output      When compiled, it will add
+///              -> (optional) `position: absolute`
+///              -> (optional) `top, right, bottom, left`
+///              -> (if needed) `transform`
+///              -> `width` and `height`
+///              -> `background-color` and `border-radius`
+///
+/// @param       {string} $size                  - The diameter of the circle
+/// @param       {string} $color                 - The color of the circle
+/// @param       {string | map} $position [null] - The type of aligment | property and the value to position
+///                                                {string} - "both", "vertical" or "horizontal"
+///                                                   {map} - "top: 0", "right: 0", "bottom: 0", "left: 0"
+///
+///
+///
+/// @example scss - Usage {$size and $color}
+///   .element
+///     +filled-circle(16px, red)
+///
+/// @example css - Compiled
+///   .element {
+///     width: 16px;
+///     height: 16px;
+///     background-color: red;
+///     border-radius: 50%;
+///   }
+///
+///
+///
+/// @example scss - Usage {$size, $color and $position(string)}
+///   .element
+///     +filled-circle(20px, blue, both)
+///
+/// @example css - Compiled
+///   .element {
+///     position: absolute;
+///     top: 50%;
+///     left: 50%;
+///     transform: translate(-50%, -50%);
+///
+///     width: 20px;
+///     height: 20px;
+///     background-color: blue;
+///     border-radius: 50%;
+///   }
+///
+///
+///
+/// @example scss - Usage {$size, $color and $position(map)}
+///   .element
+///     +filled-circle(
+///       35px,
+///       orange,
+///       (top: 10px, left: 20px)
+///     )
+///
+/// @example css - Compiled
+///   .element {
+///     position: absolute;
+///     top: 10px;
+///     left: 20px;
+///
+///     width: 35px;
+///     height: 35px;
+///     background-color: orange;
+///     border-radius: 50%;
+///   }
+///
+///
+///
+
+@mixin filled-circle($size, $color, $position: null)
+
+  @if $position != null
+    +position($position)
+
+  width: $size
+  height: $size
+
+  background-color: $color
+  border-radius: 50%
