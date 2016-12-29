@@ -1,0 +1,68 @@
+/// # Element position
+///
+/// Sass mixin to help to absolute position the element.
+/// 
+/// @author   William Teixeira Merussi
+/// @group    Tools / Mixins
+///
+/// @output   When compiled, it will add:
+///           -> `position: absolute`
+///           -> (optional) `top, right, bottom, left`
+///           -> (if needed) `transform`
+///
+/// @param    {string | map} $option - The type of aligment | property and the value to position
+///                                    {string} - `both`, `vertical` or `horizontal`
+///                                       {map} - `top: 0`, `right: 0`, `bottom: 0`, `left: 0`
+///
+///
+///
+/// @example sass - $option as {string}
+///   .element
+///     +position(both)
+///
+/// @example css - Compiled
+///   .element {
+///     position: absolute;
+///     top: 50%;
+///     left: 50%;
+///     transform: translate(-50%, -50%);
+///   }
+///
+///
+///
+/// @example sass - $option as {map}
+///   .element
+///     +position((top: 10px, left: 20px))
+///
+/// @example css - Compiled
+///   .element {
+///     position: absolute;
+///     top: 10px;
+///     left: 20px;
+///   }
+///
+///
+///
+
+@mixin position($option)
+  position: absolute
+  
+  @if type-of($option) == map
+    
+    @each $property, $value in $option
+      #{$property}: #{$value}
+    
+  @else
+
+    @if ($option == 'vertical')
+      top: 50%
+      transform: translateY(-50%)
+    
+    @if ($option == 'horizontal')
+      left: 50%
+      transform: translateX(-50%)
+    
+    @if ($option == 'both')
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
