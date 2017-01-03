@@ -1,0 +1,32 @@
+/// # Clearfix
+///
+/// Fixes the bug where the parent element doesn't get the correct height
+///
+/// @author   William Teixeira Merussi
+/// @group    Objects
+///
+/// @output   When compiled, it will add
+///           -> `content: ""`
+///           -> `display: table`
+///           -> `clear: both`
+///
+///
+///
+/// @example sass - Usage
+///   .element
+///     @extend %clearfix
+///
+/// @example css  - Compiled
+///   .element:after {
+///     content: '';
+///     display: table;
+///     clear: both;
+///   }
+///
+///
+///
+%clearfix
+  &:after
+    content: ""
+    display: table
+    clear: both
