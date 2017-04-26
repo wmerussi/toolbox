@@ -1,0 +1,39 @@
+/// # Color
+///
+/// Sass function to return a value from the $colors map
+///
+/// @author    William Teixeira Merussi
+/// @group     Tools / Functions
+///
+/// @requires  {variable} $colors <styles/config.scss>
+/// @requires  {function} map-get-ultra <styles/tools/function/map-get-ultra.sass>
+///
+/// @return    {variable} Color required
+///
+/// @param     {string}   $color - The key from $colors map
+///
+///
+///
+/// @example sass - Usage
+///   .element
+///     color: color(success)
+///
+/// @example css - Compiled
+///   .element {
+///     color: #a4cb1b;
+///   }
+///
+
+@function color($color)
+  $value: map-get-ultra($colors, $color)
+
+  @if ($value == false)
+    @error "A chave `#{$color}` no não foi encontrada no mapa $colors"
+
+  @if (type-of($value) == map)
+    @if (map-has-key($value, "base"))
+      @return map-get($value, "base")
+
+    @error "A chave `#{$color}` é um mapa e não possui um valor base"
+
+  @return $value
