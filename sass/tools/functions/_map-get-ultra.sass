@@ -1,0 +1,69 @@
+/// # Map Get Ultra
+///
+/// Sass function to return a deep value inside a map, informing only the map and the deep key.
+///
+/// It's important to note that this function returns the first ($key) value inside the map ($map),
+/// so the map may not contain more than one key with the same name.
+//  If it's necessary to have more than one key with the same name, another function might be needed
+/// to address this matter.
+/// 
+/// @author    William Teixeira Merussi
+/// @group     Tools / Functions
+///
+/// @return    {variable} Deep value inside a map
+///
+/// @param     {map}    $map   - The variable name of the map
+/// @param     {string} $key   - The deep key inside the map
+///
+///
+///
+/// @example scss map
+///   $colors: (
+///     light: (
+///       lightest:     #fff,
+///       light-base:   #eeedeb,
+///       light-medium: #e0e0e0
+///     ),
+///     dark: (
+///       dark-light:  #c9c9c7,
+///       dark-base:   #706f6f,
+///       dark-medium: #b1afaf,
+///       darkest: (
+///         darkest1: (
+///           darkest11: #000,
+///           darkest12: #001,
+///           darkest13: (
+///             darkest131: #007
+///           )
+///         )
+///       )
+///     ),
+///     shades: (
+///       shades-light: #333,
+///       shades-base:  #222
+///     ),
+///     base: #123
+///   );
+///
+/// @example sass - Usage
+///   .element
+///     color: map-get-ultra($colors, darkest131)
+///
+/// @example css - Compiled
+///   .element {
+///     color: #007;
+///   }
+///
+///
+///
+@function map-get-ultra($map, $key)
+  
+  @if (map-has-key($map, $key))
+    @return map-get($map, $key)
+  
+  @each $map-key, $map-value in $map
+    $recursive: type-of($map-value) == map and map-get-ultra($map-value, $key)
+    @if ($recursive)
+      @return $recursive
+  
+  @return false
