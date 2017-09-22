@@ -1,0 +1,98 @@
+/// # Multi nth-child
+///
+/// Sass mixin to create several nth-child, one for each value from a given map.
+/// 
+/// @author      William Teixeira Merussi
+/// @group       Tools / Mixins
+///
+/// @requires    {function} get-list <https://github.com/wmerussi/toolbox/blob/master/sass/tools/functions/_get-list.sass>
+///
+/// @output      When compiled, it will add several nth-child to the CSS, one for each value from the map
+///
+/// @param       {string} $propertie - The propertie that each map value will apply to
+/// @param       {map}    $map       - A map with the values
+///
+///
+///
+/// @example scss map
+///   $colors: (
+///     light: (
+///       lightest:     #fff,
+///       light-base:   #eeedeb,
+///       light-medium: #e0e0e0
+///     ),
+///     dark: (
+///       dark-light:  #c9c9c7,
+///       dark-base:   #706f6f,
+///       dark-medium: #b1afaf,
+///       darkest: (
+///         darkest1: (
+///           darkest11: #000,
+///           darkest12: #001,
+///           darkest13: (
+///             darkest131: #007
+///           )
+///         )
+///       )
+///     ),
+///     shades: (
+///       shades-light: #333,
+///       shades-base:  #222
+///     ),
+///     base: #123
+///   ) !default;
+///
+/// @example scss - Usage
+///   .element
+///     +multi-nth-child(background-color, $colors)
+///
+/// @example css - Compiled
+///   .element:nth-child(1) {
+///     background-color: #fff;
+///   }
+///   .element:nth-child(2) {
+///     background-color: #eeedeb;
+///   }
+///   .element:nth-child(3) {
+///     background-color: #e0e0e0;
+///   }
+///   .element:nth-child(4) {
+///     background-color: #c9c9c7;
+///   }
+///   .element:nth-child(5) {
+///     background-color: #706f6f;
+///   }
+///   .element:nth-child(6) {
+///     background-color: #b1afaf;
+///   }
+///   .element:nth-child(7) {
+///     background-color: #000;
+///   }
+///   .element:nth-child(8) {
+///     background-color: #001;
+///   }
+///   .element:nth-child(9) {
+///     background-color: #007;
+///   }
+///   .element:nth-child(10) {
+///     background-color: #333;
+///   }
+///   .element:nth-child(11) {
+///     background-color: #222;
+///   }
+///   .element:nth-child(12) {
+///     background-color: #123;
+///   }
+///
+///
+///
+
+@mixin multi-nth-child($propertie, $map)
+  $i: 1
+  $list: get-list($map)
+  
+  @each $value in $list
+    &:nth-child(#{$i})
+      #{$propertie}: $value
+    
+    $i: $i + 1
