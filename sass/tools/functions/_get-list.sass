@@ -1,0 +1,60 @@
+/// # Get List
+///
+/// Sass function to return a list with all values from a map, even if it has submaps
+///
+/// @author    William Teixeira Merussi
+/// @group     Tools / Functions
+///
+/// @return    {list} A list with all the values from the map
+///
+/// @param     {map}  $map - A map
+///
+///
+///
+/// @example scss map
+///   $colors: (
+///     light: (
+///       lightest:     #fff,
+///       light-base:   #eeedeb,
+///       light-medium: #e0e0e0
+///     ),
+///     dark: (
+///       dark-light:  #c9c9c7,
+///       dark-base:   #706f6f,
+///       dark-medium: #b1afaf,
+///       darkest: (
+///         darkest1: (
+///           darkest11: #000,
+///           darkest12: #001,
+///           darkest13: (
+///             darkest131: #007
+///           )
+///         )
+///       )
+///     ),
+///     shades: (
+///       shades-light: #333,
+///       shades-base:  #222
+///     ),
+///     base: #123
+///   ) !default;
+///
+/// @example sass - Usage
+///   .element
+///     color: get-list($colors)
+///
+/// @example return
+///   #fff #eeedeb #e0e0e0 #c9c9c7 #706f6f #b1afaf #000 #001 #007 #333 #222 #123
+///
+
+@function get-list($map)
+  $list: ()
+  
+  @each $map-key, $map-value in $map
+    @if type-of($map-value) == map
+      $list: join($list, get-list($map-value))
+    @else
+      $list: append($list, $map-value)
+  
+  @return $list
+  
