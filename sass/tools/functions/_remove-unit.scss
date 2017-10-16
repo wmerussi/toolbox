@@ -1,0 +1,19 @@
+/// Function to remove the unit of a value
+///
+/// @group  Tools / Functions
+///
+/// @return {number} - Unitless value
+///
+/// @param  {number} $value - Value to remove the unit
+///
+/// @example - Usage
+///   remove-unit(100px)
+///
+/// @example - Compiled
+///   100
+///
+@function remove-unit($value) {
+  @if type-of($value) == "number" {
+    @return $value / ($value * 0 + 1);
+  }
+}
