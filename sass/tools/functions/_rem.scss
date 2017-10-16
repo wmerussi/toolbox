@@ -1,0 +1,50 @@
+/// Converts a map of px or a single px to rem
+///
+/// @group    Tools / Functions
+/// @requires {variable} $default-font-size
+///
+/// @return   {map | variable} Map or value as rem unit, according to the base value
+///
+/// @param    {map}    $px                        - The map or value in px
+/// @param    {string} $base [$default-font-size] - The base px value
+///
+///
+///
+/// @example scss map
+///   $px-map: (
+///     s : 8px,
+///     m : 24px,
+///     l : 32px,
+///   );
+///
+///   $px-value: 16px;
+///
+/// @example - Usage
+///   $rem-map: rem($px-map, 16px);
+///   $rem-value: rem($px-value, 16px);
+///
+/// @example - Compiled
+///   $rem-map: (
+///     s : 0.5rem,
+///     m : 1.5rem,
+///     l : 2.0rem,
+///   );
+///
+///   $rem-value: 1rem;
+///
+@function rem($px, $base: $default-font-size) {
+  $rem: null;
+
+  @if type-of($px) == "map" {
+    $rem: ();
+
+    @each $key, $value in $px {
+      $convert-to-rem: $value / $base * 1rem;
+      $rem: map-merge($rem, ($key: $convert-to-rem));
+    }
+  } @else {
+    $rem: $px / $base * 1rem;
+  }
+
+  @return $rem;
+}
